@@ -35,6 +35,7 @@ namespace DepartmentSystemWebAPI.Controllers
         //    _context = context;
             
         //}
+        // TEST
         public AppController(IStudentServices studentServices, ICourseServices courseServices, ILecturerServices lecturerServices, ILecturerCourseServices lecturer_CourseServices, IDepartmentServices departmentServices, IGraduateServices graduateServices)
         {
             _studentServices = studentServices;
