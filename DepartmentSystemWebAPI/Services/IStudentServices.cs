@@ -10,13 +10,13 @@ namespace DepartmentSystemWebAPI.Services
     {
         //IEnumerable<Student> GetAllStudents();
         Task<IEnumerable<Student>> GetAllData();
-        Task<IEnumerable<Student>> GetStudentBySearch(StudentFilter studentFilter);
+        Task<IEnumerable<Student>> GetStudentBySearchNotUsed(StudentFilter studentFilter);
         Task<Student> GetStudentById(int id);
         Task<ApiResponse<Student>> PostStudent(CreateStudentDTO createStudentDTO);
         Task<ApiResponse<EditStudentDTO>> PutStudent(int id, EditStudentDTO editStudentDTO);
         Task<ApiResponse<Student>> DeleteStudent(int id);
         Task<IEnumerable<StudentDTO>> GetAllDataTest();
         //Task<IEnumerable<StudentDTO>> GetStudentBySearchTest(StudentFilter studentFilter);
-        Task<ApiResponse<IEnumerable<StudentDTO>>> GetStudentBySearchTest(StudentFilter studentFilter);
+        Task<ApiResponse<IEnumerable<StudentDTO>>> GetStudentBySearch(StudentFilter studentFilter);
     }
 }
