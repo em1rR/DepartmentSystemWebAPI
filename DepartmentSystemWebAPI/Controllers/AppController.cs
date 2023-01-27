@@ -21,20 +21,15 @@ namespace DepartmentSystemWebAPI.Controllers
     [ApiController]
     public class AppController : ControllerBase
     {
-        //private readonly StudentContext _context;
-        //private readonly StudentServices _studentServices;
         private IStudentServices _studentServices;
         private ICourseServices _courseServices;
         private ILecturerServices _lecturerServices;
         private ILecturerCourseServices _lecturer_courseServices;
         private IDepartmentServices _departmentServices;
         private IGraduateServices _graduateServices;
+        private IExceptionLogServices _exceptionLogServices;
 
-        //public StudentsController(StudentContext context)
-        //{
-        //    _context = context;
-        //}
-        public AppController(IStudentServices studentServices, ICourseServices courseServices, ILecturerServices lecturerServices, ILecturerCourseServices lecturer_CourseServices, IDepartmentServices departmentServices, IGraduateServices graduateServices)
+        public AppController(IStudentServices studentServices, ICourseServices courseServices, ILecturerServices lecturerServices, ILecturerCourseServices lecturer_CourseServices, IDepartmentServices departmentServices, IGraduateServices graduateServices, IExceptionLogServices exceptionLogServices)
         {
             _studentServices = studentServices;
             _courseServices = courseServices;
@@ -42,19 +37,20 @@ namespace DepartmentSystemWebAPI.Controllers
             _lecturer_courseServices = lecturer_CourseServices;
             _departmentServices = departmentServices;
             _graduateServices = graduateServices;
+            _exceptionLogServices = exceptionLogServices;
         }
 
         #region students
 
-        //GET: api/Students
+        //GET: api/App/Student/Get
         [HttpGet]
         [Route("Student/Get")]
         public async Task<IEnumerable<Student>> GetStudents()
         {
-            throw new Test();
             return await _studentServices.GetAllData();
         }
 
+        //GET: api/App/Student/Get
         [HttpGet]
         [Route("StudentDto/Get")]
         public async Task<IEnumerable<StudentDTO>> GetStudentsDto()
@@ -62,7 +58,7 @@ namespace DepartmentSystemWebAPI.Controllers
             return await _studentServices.GetAllDataTest();
         }
 
-        // GET: api/Students/5
+        // GET: api/App/Student/5
         [HttpGet]
         [Route("Student/Get{id}")]
         public async Task<Student> GetStudent(int id)
@@ -78,44 +74,24 @@ namespace DepartmentSystemWebAPI.Controllers
             }
         }
 
+        //GET: api/App/Student/GetBySearchNotUsed
+        [HttpGet]
+        [Route("Student/GetBySearchNotUsed")]
+        public async Task<IEnumerable<Student>> GetBySearchNotUsed([FromQuery]StudentFilter studentFilter)
+        {        
+            var q = await _studentServices.GetStudentBySearchNotUsed(studentFilter);
+            return q;
+        }
 
-        //GET: api/Students
+        //GET:  api/App/Student/GetBySearch
         [HttpGet]
         [Route("Student/GetBySearch")]
-        //public async Task<IEnumerable<Student>> GetBySearch(string id, string name, string department_id, string graduate_id)
-        public async Task<IEnumerable<Student>> GetBySearch([FromQuery]StudentFilter studentFilter)
+        public async Task<ApiResponse<IEnumerable<StudentDTO>>> GetBySearch([FromQuery] StudentFilter studentFilter)
         {
-            //StudentFilter studentFilter = new StudentFilter();
-            //studentFilter.Name = name;
-            //studentFilter.Id = int.Parse(id);
-            //studentFilter.GraduateId = int.Parse(graduate_id);
-            //studentFilter.DepartmentId = int.Parse(graduate_id);
-
-            var q = await _studentServices.GetStudentBySearch(studentFilter);
-            return q;
-            //return await _studentRepository.GetStudentBySearch();
+            return await _studentServices.GetStudentBySearch(studentFilter);
         }
 
-        //GET: api/Students
-        [HttpGet]
-        [Route("Student/GetBySearchTest")]
-        //public async Task<IEnumerable<Student>> GetBySearch(string id, string name, string department_id, string graduate_id)
-        public async Task<ApiResponse<IEnumerable<StudentDTO>>> GetBySearchTest([FromQuery] StudentFilter studentFilter)
-        {
-            //StudentFilter studentFilter = new StudentFilter();
-            //studentFilter.Name = name;
-            //studentFilter.Id = int.Parse(id);
-            //studentFilter.GraduateId = int.Parse(graduate_id);
-            //studentFilter.DepartmentId = int.Parse(graduate_id);
-
-            
-            var apiResponse = await _studentServices.GetStudentBySearchTest(studentFilter);
-            return apiResponse;
-
-        }
-
-
-        //PUT: api/Students/5
+        //PUT: api/App/Student/Put{5}
         [HttpPut]
         [Route("Student/Put{id}")]
         public async Task<ApiResponse<EditStudentDTO>> PutStudent(int id, EditStudentDTO student)
@@ -123,24 +99,12 @@ namespace DepartmentSystemWebAPI.Controllers
             return await _studentServices.PutStudent(id, student);
         }
 
-        //POST: api/Students
+        //POST: api/App/Student/Post
         [HttpPost]
         [Route("Student/Post")]
-        //public async Task<Student> PostStudent(CreateStudentDTO student)
         public async Task<ApiResponse<Student>> PostStudent(CreateStudentDTO student)
         {
             return await _studentServices.PostStudent(student);
-            //try
-            //{
-               
-            //}
-            //catch (Exception ex)
-            //{
-            //    //throw ex;
-            //    return new ApiResponse<Student>();
-            //    //return ex;
-            //}
-           
         }
 
         //DELETE
@@ -267,6 +231,21 @@ namespace DepartmentSystemWebAPI.Controllers
             return await _graduateServices.GetAllData();
         }
 
+        #endregion
+
+        #region ExceptionLog
+        [HttpGet]
+        [Route("ExceptionLog/Get")]
+        public async Task<IEnumerable<ExceptionLog>> GetExceptionLog()
+        {
+            return await _exceptionLogServices.GetExceptionLog();
+        }
+        [HttpPost]
+        [Route("ExceptionLog/Post")]
+        public async Task PostException(Exception exception)
+        {
+            await _exceptionLogServices.PostException(exception);
+        }
         #endregion
 
         #region gender

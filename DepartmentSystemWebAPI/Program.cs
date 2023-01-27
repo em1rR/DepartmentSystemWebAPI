@@ -16,8 +16,7 @@ builder.Services.AddScoped<ILecturerServices, LecturerServices>();
 builder.Services.AddScoped<ILecturerCourseServices, LecturerCourseServices>();
 builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
 builder.Services.AddScoped<IGraduateServices, GraduateServices>();
-
-
+builder.Services.AddScoped<IExceptionLogServices, ExceptionLogServices>();
 
 
 builder.Services.AddEndpointsApiExplorer();

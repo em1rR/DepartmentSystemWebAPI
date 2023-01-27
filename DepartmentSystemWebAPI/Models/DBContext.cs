@@ -31,10 +31,6 @@ namespace DepartmentSystemWebAPI.Models
                 table.student_id,
                 table.course_id
             });
-
-            //builder.Entity<Student>()
-            //    .Property(c => c.gender)
-            //    .HasConversion<string>();
         }
 
         public DbSet<Student> students { get; set; } = null!;
@@ -44,6 +40,7 @@ namespace DepartmentSystemWebAPI.Models
         public DbSet<Graduate> graduates { get; set; } = null!;
         public DbSet<StudentCourseGrade> student_course_grades { get; set; } = null!;
         public DbSet<LecturerCourse> lecturer_courses { get; set; } = null!;
+        public DbSet<ExceptionLog> exceptions { get; set; } = null!;
 
     }
 }
