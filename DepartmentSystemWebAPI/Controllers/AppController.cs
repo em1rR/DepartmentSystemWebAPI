@@ -27,8 +27,9 @@ namespace DepartmentSystemWebAPI.Controllers
         private ILecturerCourseServices _lecturer_courseServices;
         private IDepartmentServices _departmentServices;
         private IGraduateServices _graduateServices;
+        private IExceptionLogServices _exceptionLogServices;
 
-        public AppController(IStudentServices studentServices, ICourseServices courseServices, ILecturerServices lecturerServices, ILecturerCourseServices lecturer_CourseServices, IDepartmentServices departmentServices, IGraduateServices graduateServices)
+        public AppController(IStudentServices studentServices, ICourseServices courseServices, ILecturerServices lecturerServices, ILecturerCourseServices lecturer_CourseServices, IDepartmentServices departmentServices, IGraduateServices graduateServices, IExceptionLogServices exceptionLogServices)
         {
             _studentServices = studentServices;
             _courseServices = courseServices;
@@ -36,6 +37,7 @@ namespace DepartmentSystemWebAPI.Controllers
             _lecturer_courseServices = lecturer_CourseServices;
             _departmentServices = departmentServices;
             _graduateServices = graduateServices;
+            _exceptionLogServices = exceptionLogServices;
         }
 
         #region students
@@ -229,6 +231,21 @@ namespace DepartmentSystemWebAPI.Controllers
             return await _graduateServices.GetAllData();
         }
 
+        #endregion
+
+        #region ExceptionLog
+        [HttpGet]
+        [Route("ExceptionLog/Get")]
+        public async Task<IEnumerable<ExceptionLog>> GetExceptionLog()
+        {
+            return await _exceptionLogServices.GetExceptionLog();
+        }
+        [HttpPost]
+        [Route("ExceptionLog/Post")]
+        public async Task PostException(Exception exception)
+        {
+            await _exceptionLogServices.PostException(exception);
+        }
         #endregion
 
         #region gender

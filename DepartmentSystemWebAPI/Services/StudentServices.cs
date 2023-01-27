@@ -64,7 +64,6 @@ namespace DepartmentSystemWebAPI.Services
         // GET student by search
         public async Task<ApiResponse<IEnumerable<StudentDTO>>> GetStudentBySearch(StudentFilter studentFilter)
         {
-            
             var query =
 
                (from s in _context.students
